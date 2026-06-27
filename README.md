@@ -21,7 +21,7 @@ It is not a clinical calculator and is not for patient care.
 The public ECG-SCD repository currently ships code and training procedures, but not pretrained model artifacts. To run prediction, put artifacts created by the upstream training scripts into this app's `models/` directory:
 
 ```text
-ECG-SCD-MVP/models/
+models/
   model_registry.json
   modelfits_ecg/
     ntuh_scd_model_demo.json
@@ -66,7 +66,8 @@ http://localhost:8080/?job=<jobId>
 ## Run Locally With Docker
 
 ```bash
-cd /Users/benjamincox/Downloads/ECG-SCD-MVP
+git clone https://github.com/ZuchGuillotine/ecg-scd-mvp.git
+cd ecg-scd-mvp
 cp models/model_registry.example.json models/model_registry.json
 docker compose up --build
 ```
@@ -78,7 +79,8 @@ Docker installs the unmodified upstream package from [alexmschubert/ECG-SCD](htt
 ## Run Without Docker
 
 ```bash
-cd /Users/benjamincox/Downloads/ECG-SCD-MVP
+git clone https://github.com/ZuchGuillotine/ecg-scd-mvp.git
+cd ecg-scd-mvp
 python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.inference.txt
@@ -88,7 +90,8 @@ uvicorn backend.app.main:app --host 0.0.0.0 --port 8080
 ## Test Locally
 
 ```bash
-cd /Users/benjamincox/Downloads/ECG-SCD-MVP
+git clone https://github.com/ZuchGuillotine/ecg-scd-mvp.git
+cd ecg-scd-mvp
 uv venv .venv
 uv pip install --python .venv/bin/python -e '.[dev]'
 .venv/bin/python -m pytest tests/test_biomarker_interpreter.py -q
