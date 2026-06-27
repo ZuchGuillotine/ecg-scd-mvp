@@ -1,0 +1,23 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+uv.lock
+*.egg-info/
+
+# Local runtime uploads/results. Keep storage/.gitkeep so the directory exists.
+storage/jobs/
+!storage/.gitkeep
+
+# Local model artifacts can be large and may have separate usage terms.
+models/model_registry.json
+models/modelfits_ecg/
+models/modelfits_beat/
+
+# Local downloads and scratch exports.
+*.feather
+*.npy
+*.npz
+*.dat
+*.hea

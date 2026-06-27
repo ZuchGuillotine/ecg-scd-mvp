@@ -1,0 +1,11 @@
+services:
+  ecg-scd-mvp:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      ECG_SCD_STORAGE: /app/storage
+      ECG_SCD_MODEL_REGISTRY: /app/models/model_registry.json
+    volumes:
+      - ./storage:/app/storage
+      - ./models:/app/models:ro

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ECG-SCD Explorer</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="topbar">
+        <div>
+          <h1>ECG-SCD Explorer</h1>
+          <p>Research-only ECG waveform review and prediction wrapper.</p>
+        </div>
+        <span class="status-pill" id="apiStatus">Checking backend</span>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel controls">
+          <form id="uploadForm">
+            <label class="field">
+              ECG files
+              <input id="fileInput" name="files" type="file" multiple accept=".npy,.npz,.csv,.zip" />
+            </label>
+            <label class="field">
+              Sampling rate
+              <input id="samplingRate" name="sampling_rate_hz" type="number" min="1" value="500" />
+            </label>
+            <label class="field">
+              Lead order override
+              <input id="leadOrder" name="lead_order" type="text" placeholder="I,II,III,aVR,aVL,aVF,V1,V2,V3,V4,V5,V6" />
+            </label>
+            <button type="submit">Upload and inspect</button>
+          </form>
+
+          <div class="divider"></div>
+
+          <form id="predictForm">
+            <label class="field">
+              Model artifact
+              <select id="modelSelect"></select>
+            </label>
+            <label class="check-row">
+              <input id="allowMissing" type="checkbox" />
+              <span>Allow missing-lead prediction</span>
+            </label>
+            <button type="submit">Run prediction</button>
+          </form>
+
+          <div class="divider"></div>
+
+          <form id="biomarkerForm">
+            <button type="submit">Compute aVL biomarker</button>
+          </form>
+
+          <div class="divider"></div>
+
+          <section class="history-section">
+            <div class="section-head compact-head">
+              <h2>Previous Runs</h2>
+              <button id="refreshRuns" class="secondary-button" type="button">Refresh</button>
+            </div>
+            <div id="runsList" class="runs-list"></div>
+          </section>
+        </aside>
+
+        <section class="content">
+          <div class="notice">
+            Not for patient care. Use only for retrospective exploration, cohort review, and reproducibility checks.
+          </div>
+
+          <section class="panel">
+            <div class="section-head">
+              <h2>Records</h2>
+              <span id="jobLabel">No job loaded</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Study</th>
+                    <th>Leads</th>
+                    <th>Missing</th>
+                    <th>Derived</th>
+                    <th>Duration</th>
+                  </tr>
+                </thead>
+                <tbody id="recordsTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="grid">
+            <div class="panel">
+              <div class="section-head">
+                <h2>ECG Preview</h2>
+                <select id="previewSelect"></select>
+              </div>
+              <canvas id="ecgCanvas" width="980" height="520"></canvas>
+            </div>
+
+            <div class="panel">
+              <div class="section-head">
+                <h2>Caveats</h2>
+              </div>
+              <ul id="caveatsList" class="caveats"></ul>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <h2>aVL Biomarker</h2>
+              <div class="section-actions">
+                <button id="openBiomarkerInterpretation" class="secondary-button" type="button">Review workflow</button>
+                <span id="biomarkerLabel"></span>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead id="biomarkerHead"></thead>
+                <tbody id="biomarkerTable"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head">
+              <h2>Model Predictions</h2>
+              <span id="predictionLabel"></span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead id="predictionHead"></thead>
+                <tbody id="predictionTable"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <dialog id="biomarkerDialog" class="interpretation-dialog">
+      <div class="dialog-head">
+        <div>
+          <h2>aVL Biomarker Workflow Review</h2>
+          <p>Research morphology feature and reproduction-method checks for this uploaded cohort.</p>
+        </div>
+        <button id="closeBiomarkerInterpretation" class="secondary-button" type="button">Close</button>
+      </div>
+      <div id="biomarkerInterpretationBody" class="interpretation-body"></div>
+    </dialog>
+
+    <script src="/assets/app.js" type="module"></script>
+  </body>
+</html>

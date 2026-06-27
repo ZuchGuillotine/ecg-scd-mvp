@@ -1,0 +1,15 @@
+{
+  "models": [
+    {
+      "id": "ntuh_scd_model_demo",
+      "label": "NTUH-trained 10-second ECG model",
+      "kind": "ecg_10s",
+      "model_name": "ntuh_scd_model_demo",
+      "params_path": "/app/models/modelfits_ecg/ntuh_scd_model_demo.json",
+      "model_path": "/app/models/modelfits_ecg/ntuh_scd_model_demo",
+      "calibration_path": "/app/models/modelfits_ecg/ntuh_scd_model_demo/calibration_model.pkl",
+      "lead_mode": "12-lead",
+      "notes": "Place the JSON and model.best.pth.tar artifacts produced by the upstream training script in ./models/modelfits_ecg/."
+    }
+  ]
+}
